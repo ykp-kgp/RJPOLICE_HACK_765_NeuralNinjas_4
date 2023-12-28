@@ -13,7 +13,6 @@ Ensure you have **Node.js** installed before proceeding.
    This will create a package.json with default settings.
    ```bash
    npm init -y
-   
 
 3. **Install Express:**
    Express is a fast, unopinionated, minimalist web framework for Node.js.
