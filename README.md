@@ -10,9 +10,10 @@ Ensure you have **Node.js** installed before proceeding.
    Open your terminal and change the directory to where you want to set up the server.
    
 2. **Initialize a New Node.js Project:**  
+   This will create a package.json with default settings.
    ```bash
    npm init -y
-   This will create a package.json with default settings.
+   
 
 3. **Install Express:**
    Express is a fast, unopinionated, minimalist web framework for Node.js.
