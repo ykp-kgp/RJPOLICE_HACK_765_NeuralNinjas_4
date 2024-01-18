@@ -7,8 +7,7 @@ from googletrans import Translator
 import json
 from SER import func
 from fine_tuned_llama2 import generate_query
-
-
+from flask import session
 
 
 app = Flask(__name__)
@@ -45,6 +44,8 @@ def index():
     return render_template('index.html')
 
 
+
+
 @app.route('/process', methods=['POST'])
 def process():
     input_option = request.form.get('inputOption')
@@ -65,36 +66,24 @@ def process():
         user_input_image.save(image_path)
         result = ocrFunc(image_path)
 
+    
     # Use the search function from your model
     dict_of_Sections = func(user_input_text)
     # model_result = generate_query(user_input_text, dict_of_Sections)
     # model_result_dict = ast.literal_eval(model_result)
+    session['user_input_text'] = user_input_text
+    session['dict_of_Sections'] = dict_of_Sections
 
     return render_template('result.html', result=dict_of_Sections)
 
 
 @app.route('/model_result')
 def model_result():
-    input_option = request.form.get('inputOption')
-    user_input_text = request.form.get('text', '').strip()
-    user_input_image = request.files.get('image')
-
-    if input_option == 'text' and not user_input_text:
-        flash('Please provide text.')
-        return redirect(url_for('index'))
-    elif input_option == 'image' and not user_input_image:
-        flash('Please upload an image.')
-        return redirect(url_for('index'))
-
-    if input_option == 'text':
-        result = nlpFunc(user_input_text)
-    else:
-        image_path = "temp_image.png"
-        user_input_image.save(image_path)
-        result = ocrFunc(image_path)
     # You can include any specific logic or data needed for the model result page
-    dict_of_Sections = func(user_input_text)
-    model_result = generate_query(user_input_text, dict_of_Sections)
+    user_input_text = session.get('user_input_text', '')
+    dict_of_Sections = session.get('dict_of_Sections', {})
+    print(generate_query(user_input_text, dict_of_Sections))
+    model_result = {generate_query(user_input_text, dict_of_Sections):""}
     return render_template('model_result.html', result=model_result)
 
 

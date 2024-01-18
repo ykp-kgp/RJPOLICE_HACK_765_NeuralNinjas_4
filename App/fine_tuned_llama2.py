@@ -14,23 +14,15 @@ if not os.environ.get("GRADIENT_WORKSPACE_ID", None):
     os.environ["GRADIENT_WORKSPACE_ID"] = "880ee27e-5b8f-4057-a266-209896ce267c_workspace"
 
 
-
-# llm = GradientLLM(
-#     # `ID` listed in `$ gradient model list`
-#     model="fda8e0b4-e908-4644-8e9c-ecc43ffe57ab_model_adapter",
-#     # # optional: set new credentials, they default to environment variables
-#     # gradient_workspace_id=os.environ["GRADIENT_WORKSPACE_ID"],
-#     # gradient_access_token=os.environ["GRADIENT_ACCESS_TOKEN"],
-#     model_kwargs=dict(max_generated_token_count=128),
-# )
-
-
 def generate_query(complaint_text, ipc_dict):
+    print(complaint_text)
     question = "Given the following FIR description, {complaint_text}\nTell me which of the following IPC sections could be applied\n{ipc_dict}"
     llm = GradientLLM(
-    model="fda8e0b4-e908-4644-8e9c-ecc43ffe57ab_model_adapter",
+    model="62f07e2b-c760-46c4-b512-452640dc3b63_model_adapter",
     model_kwargs=dict(max_generated_token_count=128),
 )
+    question = f"Given the following FIR description, {complaint_text}\nTell me which of the following IPC sections could be applied\n{ipc_dict}"
+
     template = """Question: {question}
 
 Answer: """
@@ -38,5 +30,6 @@ Answer: """
     llm_chain = LLMChain(prompt=prompt, llm=llm)
     response = llm_chain.run(question=question)
     response_text = response.split("Response: ", 1)[-1].strip()
+    print(response_text)
     return response_text
 
