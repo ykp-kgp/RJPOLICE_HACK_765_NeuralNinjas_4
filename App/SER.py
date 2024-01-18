@@ -32,10 +32,6 @@ print("Passages:", len(passages_and_ipc))
 # We encode all passages into our vector space. This takes about 5 minutes (depends on your GPU speed)
 corpus_embeddings = bi_encoder.encode([passage for passage, ipc in passages_and_ipc], convert_to_tensor=True, show_progress_bar=True)
 
-
-
-
-
 def search(query,k):
     results = {}
 
@@ -59,7 +55,7 @@ def search(query,k):
 
 
 
-s="Sevame Mr. Police Officer, Sir, Pulish police station dargah Ajmer, in connection with the request to Kanuni Karviya, I am requesting Lalaram Putar Ramlal 17 Jati Bhil resident Shahpura - Rupapura district Bhilwada and I was going to be a 2 -minute phone of Utaur Rahman, then Atikur Rahman Putar Athahur Rahman said to me in the talkroom, I wrote me, I refused, then he slapped me and grabbed my hair and hit the wall on the wall and abused me. Lalaram Shahpura- Rooppura District Bhilwara 8209072672 Hall in/No. 502/19 Hindu Mola Mohla Gasety Bazar Ajmer 95410505, 3/4/23 Action Police PS Dargah District Ajmer Date 04.04.2023 Time is certified that Tahiriri Hasta is certified. Written report Shri Lalaram son Shri Ram Lal caste Bhil age 17 years resident Rooppura Police Station Phoolia district Bhilwara (Raj) Hall Ataur Rahman's house 502/19 Hindi Mochi Mohalla Ghaseti Bazar Ajmer PS Dargah Ajmer, May Shri Ajizur Rahman son Mr. Ataur Rahman caste Chudghar Syed Musalman age 41 years resident M.N. 502/19 Hindu Mauchi Mauhla Ghaseti Bazaar Ajmer PS Dargah Ajmer District Ajmer was present via the police station present. On Mazid Dariyaft, the incident is from the ground floor in Ataur Rahman's house. It was read after reading. Listened to understand right. Majmoon Report 341,323,342,504,377/511 IPC, 7/8, 18 Poxo Act 2012 and Section 3 (2) (2) (2) (v) (A) SC/ST Act 1989 and filed an indictment on CCTNS portal after coming to Waku of SC/ST Act 1989. . Tafish Shri Gori Shankar was held by Deputy Superintendent of Police, Sur Dargah District Ajmer. M.N. CCTNS will be inscribed separately when received from the portal. Capital FIR was issued as per rules. A copy of FIR is free. Will be given to SR will be released separately. SD Ugma Ram Uni I/C Police Station Police Station Dargah District Ajmer"
+# s="Sevame Mr. Police Officer, Sir, Pulish police station dargah Ajmer, in connection with the request to Kanuni Karviya, I am requesting Lalaram Putar Ramlal 17 Jati Bhil resident Shahpura - Rupapura district Bhilwada and I was going to be a 2 -minute phone of Utaur Rahman, then Atikur Rahman Putar Athahur Rahman said to me in the talkroom, I wrote me, I refused, then he slapped me and grabbed my hair and hit the wall on the wall and abused me. Lalaram Shahpura- Rooppura District Bhilwara 8209072672 Hall in/No. 502/19 Hindu Mola Mohla Gasety Bazar Ajmer 95410505, 3/4/23 Action Police PS Dargah District Ajmer Date 04.04.2023 Time is certified that Tahiriri Hasta is certified. Written report Shri Lalaram son Shri Ram Lal caste Bhil age 17 years resident Rooppura Police Station Phoolia district Bhilwara (Raj) Hall Ataur Rahman's house 502/19 Hindi Mochi Mohalla Ghaseti Bazar Ajmer PS Dargah Ajmer, May Shri Ajizur Rahman son Mr. Ataur Rahman caste Chudghar Syed Musalman age 41 years resident M.N. 502/19 Hindu Mauchi Mauhla Ghaseti Bazaar Ajmer PS Dargah Ajmer District Ajmer was present via the police station present. On Mazid Dariyaft, the incident is from the ground floor in Ataur Rahman's house. It was read after reading. Listened to understand right. Majmoon Report 341,323,342,504,377/511 IPC, 7/8, 18 Poxo Act 2012 and Section 3 (2) (2) (2) (v) (A) SC/ST Act 1989 and filed an indictment on CCTNS portal after coming to Waku of SC/ST Act 1989. . Tafish Shri Gori Shankar was held by Deputy Superintendent of Police, Sur Dargah District Ajmer. M.N. CCTNS will be inscribed separately when received from the portal. Capital FIR was issued as per rules. A copy of FIR is free. Will be given to SR will be released separately. SD Ugma Ram Uni I/C Police Station Police Station Dargah District Ajmer"
 
 import re
 
@@ -216,7 +212,7 @@ def func(str):
 
     # print(output_ipc_sections) #2 elements
 
-    y=search(s,10)
+    y=search(str,10)
     for ipc in y:
         if not ipc in output_ipc_sections:
             output_ipc_sections[ipc]=y[ipc]

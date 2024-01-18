@@ -22,21 +22,22 @@ def translate_text(text, src_lang='hi', dest_lang='en'):
 def nlpFunc(text):
     try:
         translated_text = translate_text(text)  
-        result_dict = {"Translated Text": translated_text, "Original Text": text}
-        return result_dict
+        # result_dict = {"Translated Text": translated_text, "Original Text": text}
+        return translated_text
     except Exception as e:
-        flash("Translation error:", e)  
-        return {"Example Key": text}
+        flash(e)  
+        return text
 
 
 def ocrFunc(image_file):
     try:
         img = Image.open(image_file)
         text = pytesseract.image_to_string(img, lang='hin')
-        return nlpFunc(text)
+        translated_text = translate_text(text)
+        return translated_text
     except Exception as e:
-        flash("OCR error:", e)
-        return {"Example Key": ""}
+        flash(e)
+        return ""
 
 
 @app.route('/')
@@ -44,6 +45,9 @@ def index():
     return render_template('index.html')
 
 
+
+
+# @app.route('/process', methods=['POST'])
 
 
 @app.route('/process', methods=['POST'])
@@ -60,15 +64,16 @@ def process():
         return redirect(url_for('index'))
 
     if input_option == 'text':
-        result = nlpFunc(user_input_text)
+        user_input_text = nlpFunc(user_input_text)
     else:
         image_path = "temp_image.png"
         user_input_image.save(image_path)
-        result = ocrFunc(image_path)
+        user_input_text = ocrFunc(image_path)
+        # print("OCR Translated Text:", user_input_text)
 
-    
-    # Use the search function from your model
+
     dict_of_Sections = func(user_input_text)
+    print(dict_of_Sections)
     # model_result = generate_query(user_input_text, dict_of_Sections)
     # model_result_dict = ast.literal_eval(model_result)
     session['user_input_text'] = user_input_text
